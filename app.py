@@ -1,24 +1,26 @@
 import streamlit as st
 import pandas as pd
 from datetime import date
-import openai
 from PyPDF2 import PdfReader
 import docx
 import os
-from dotenv import load_dotenv  # NEW
+from dotenv import load_dotenv
+import google.generativeai as genai
 
 # =============================
 # LOAD ENV VARIABLES
 # =============================
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # =============================
 # CONFIGURATION
 # =============================
 st.set_page_config(page_title="Trackfolio")
 
+# =============================
 # HELPER FUNCTIONS
+# =============================
 
 # Extract text from PDF
 def extract_text_from_pdf(file):
@@ -45,7 +47,7 @@ def get_cv_text(uploaded_file):
     else:
         return ""
 
-# Compare CV with Job Description
+# Compare CV with Job Description using Gemini
 def analyze_cv_fit(cv_text, jd_text):
     prompt = f"""
     Compare this candidate's CV with the following job description.
@@ -57,26 +59,22 @@ def analyze_cv_fit(cv_text, jd_text):
     3. Overall match score out of 10.
     """
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response['choices'][0]['message']['content']
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        return response.text
     except Exception as e:
         return f"Error analyzing CV: {e}"
 
-# Generate AI Interview Questions
+# Generate AI Interview Questions using Gemini
 def generate_interview_questions(jd_text, role):
     prompt = f"""
     Generate 5 job-specific interview questions with suggested answers for a {role}.
     Job Description:\n{jd_text}
     """
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response['choices'][0]['message']['content']
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        return response.text
     except Exception as e:
         return f"Error generating questions: {e}"
 
@@ -86,14 +84,19 @@ DATA_FILE = "data/job_tracker.csv"
 # Load tracker data
 def load_tracker():
     if not os.path.exists(DATA_FILE) or os.path.getsize(DATA_FILE) == 0:
-        return pd.DataFrame(columns=["Company", "Position", "Date Applied", "Status", "Notes"])
+        return pd.DataFrame(columns=["Role", "Company", "Date Applied", "Expected Salary", "Status", "Fit Summary"])
     return pd.read_csv(DATA_FILE)
 
 def save_tracker(df):
+    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+    if os.path.exists(DATA_FILE) and os.path.getsize(DATA_FILE) > 0:
+        existing_df = pd.read_csv(DATA_FILE)
+        df = pd.concat([existing_df, df], ignore_index=True)
     df.to_csv(DATA_FILE, index=False)
 
+# =============================
 # UI ELEMENTS
-
+# =============================
 st.title("Trackfolio")
 st.markdown("Your personal AI assistant for tracking applications, analyzing CV-job matches, and preparing for interviews.")
 
@@ -108,8 +111,8 @@ status = st.selectbox("📌 Application Status", ["Applied", "Interview", "Offer
 
 # Analyze & Save Button
 if st.button("🔍 Analyze & Save Job Application"):
-    if not openai.api_key:
-        st.error("❌ Missing OpenAI API Key. Please set it in your .env file.")
+    if not os.getenv("GEMINI_API_KEY"):
+        st.error("❌ Missing Gemini API Key. Please set it in your .env file.")
     elif cv_file and job_desc:
         with st.spinner("Analyzing your CV..."):
             cv_text = get_cv_text(cv_file)

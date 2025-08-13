@@ -1,0 +1,21 @@
+Role,Company,Date Applied,Expected Salary,Status,Fit Summary
+Internship Development Programme,Standard Bank Group,2025-08-09,50000,Interview,"Error analyzing CV: Error code: 404 - {'error': {'message': 'The model `gpt-4` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+Internship Development Programme,Standard Bank Group ,2025-08-09,60000,Applied,"Here's an analysis of Michelle Usagi's CV against the Stanbic Bank Kenya internship job description:
+
+**1. Strengths Relevant to the Job:**
+
+* **Education:** Michelle is a soon-to-be graduate with a Bachelor of Science in Population Health from Kenyatta University, aligning well with the requirement of being a university student in their 3rd, 4th, or final year.  Her coursework in Population Health Management, Epidemiology, Biostatistics, and Health Policy is relevant to several departments at Stanbic Bank, particularly those dealing with data analysis, risk management, or even potentially in areas like health insurance or financial inclusion programs.
+* **Skills:** Her skills in data collection, analysis, and interpretation are valuable assets. Proficiency in Microsoft Office Suite is also a standard requirement in most workplaces.  Her experience working in multicultural and interdisciplinary teams is a significant plus.  Her time management and organizational abilities are also highly desirable.
+* **Experience:**  While not directly related to banking, her volunteer work with the Kenya Red Cross and internship at Mbagathi District Hospital demonstrate practical experience in health outreach, community engagement, data collection and analysis (evaluating program impact), and working in a fast-paced environment. These experiences showcase her ability to work independently and as part of a team, handle responsibility, and adapt to different situations—all transferable skills beneficial in an internship.
+
+
+**2. Missing Skills/Experience:**
+
+* **Banking/Finance Specific Skills:** The CV lacks explicit experience or coursework directly related to banking, finance, or any of the specific Stanbic Bank departments listed (Core Banking, Finance, Procurement etc.). This is the biggest gap.
+* **Data Science/Technology Skills (Depending on Department):** While she's pursuing data science courses, their completion date is after the internship period.  Unless applying for a role explicitly requiring data analysis skills (and the internship duration allows some leeway), this is less of a critical issue.
+* **Explicit Mention of Internship Availability:** The CV doesn't state clearly that she's available for a 3-month internship. This is crucial and should be explicitly added.
+
+**3. Overall Match Score: 6/10**
+
+Michelle possesses a strong academic background and relevant transferable skills gained through volunteer work and internships. However, the lack of direct experience in banking or finance weakens her application significantly.  Her data science skills are also not yet fully realised.  Adding a clear statement about her 3-month internship availability and highlighting transferable skills to various departments within Stanbic Bank in her cover letter could improve her chances considerably.
+"

@@ -4,3 +4,4 @@ pandas
 python-docx
 PyPDF2
 python-dotenv
+PyMuPDF
